@@ -1,0 +1,61 @@
+.winner-layout {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.winner-card {
+  flex: 2;
+  background: #eaf1ff;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.winner-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid #2563eb;
+}
+
+.category {
+  color: #555;
+}
+
+.prize {
+  font-weight: bold;
+}
+
+.celebrate {
+  margin-top: 10px;
+  padding: 8px 15px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.chat-box {
+  flex: 1;
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.chat-msg {
+  margin-bottom: 12px;
+}
+
+.chat-msg span {
+  display: block;
+}
+
+.chat-msg small {
+  font-size: 11px;
+  color: gray;
+}

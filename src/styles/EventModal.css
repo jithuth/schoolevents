@@ -1,0 +1,95 @@
+/* BACKDROP ONLY OVER CONTENT AREA */
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  background: rgba(2, 6, 23, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 80px;
+  z-index: 50;
+}
+
+/* FORM CARD */
+.modal-card {
+  background: #020617;
+  color: white;
+  padding: 24px;
+  width: 520px;
+  border-radius: 14px;
+  box-shadow: 0px 15px 40px rgba(0,0,0,0.6);
+}
+
+/* TITLE */
+.modal-card h2 {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+/* FORM GRID */
+.modal-card form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* FULL WIDTH FIELDS */
+.modal-card textarea,
+.modal-card input[type="datetime-local"] {
+  grid-column: span 2;
+}
+
+/* INPUT STYLE */
+.modal-card input,
+.modal-card select,
+.modal-card textarea {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+}
+
+/* LABEL */
+.modal-card label {
+  grid-column: span 2;
+  font-size: 14px;
+  color: #cbd5f5;
+}
+
+/* BUTTONS */
+.modal-card button {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-card button[type="submit"] {
+  background: #3b82f6;
+  color: white;
+}
+
+.modal-card button[type="button"] {
+  background: #ef4444;
+  color: white;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .modal-card {
+    width: 95%;
+  }
+
+  .modal-card form {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-card textarea,
+  .modal-card input[type="datetime-local"] {
+    grid-column: span 1;
+  }
+}

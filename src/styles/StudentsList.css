@@ -1,0 +1,154 @@
+/* ===========================
+   STUDENTS PAGE CONTAINER
+=========================== */
+.students-container {
+  background: linear-gradient(135deg, #2c3e91, #1fa2d6);
+  padding: 25px;
+  border-radius: 16px;
+  color: #fff;
+}
+
+/* ===========================
+   HEADER
+=========================== */
+.students-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.students-header h3 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+.btn {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn.create {
+  background: #ffffff;
+  color: #2c3e91;
+}
+
+.btn.save {
+  background: #27ae60;
+  color: #fff;
+}
+
+.btn.edit {
+  background: #3498db;
+  color: #fff;
+  margin-right: 6px;
+}
+
+.btn.delete {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.btn.cancel {
+  background: #7f8c8d;
+  color: #fff;
+}
+
+/* ===========================
+   CREATE FORM
+=========================== */
+.create-form {
+  background: rgba(0, 0, 0, 0.25);
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.create-form input,
+.create-form select {
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+.create-form button {
+  grid-column: span 3;
+}
+
+/* ===========================
+   TABLE
+=========================== */
+.students-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.students-table th,
+.students-table td {
+  padding: 12px;
+  text-align: left;
+}
+
+.students-table th {
+  background: rgba(0, 0, 0, 0.5);
+  font-weight: 600;
+}
+
+.students-table tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.students-table tr:last-child {
+  border-bottom: none;
+}
+
+/* ===========================
+   TEACHER NAME
+=========================== */
+.teacher-name {
+  color: #00ffcc;
+  font-weight: 600;
+}
+
+/* ===========================
+   EDIT MODE INPUTS
+=========================== */
+.students-table input,
+.students-table select {
+  padding: 6px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 900px) {
+  .create-form {
+    grid-template-columns: 1fr;
+  }
+
+  .create-form button {
+    grid-column: span 1;
+  }
+
+  .students-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

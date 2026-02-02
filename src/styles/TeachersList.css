@@ -1,0 +1,66 @@
+/* src/styles/TeachersList.css */
+
+.teachers-container {
+  background: linear-gradient(135deg, #2c3e90, #2980b9);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.teachers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.teachers-header h3 {
+  color: #fff;
+}
+
+.create-form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  background: #020617;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.create-form input {
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+}
+
+.teachers-table {
+  width: 100%;
+  background: #0f172a;
+  color: white;
+  border-collapse: collapse;
+}
+
+.teachers-table th {
+  background: #020617;
+  padding: 12px;
+}
+
+.teachers-table td {
+  padding: 10px;
+  border-bottom: 1px solid #1e293b;
+}
+
+.btn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-right: 6px;
+  font-weight: 600;
+}
+
+.btn.create { background: #22c55e; }
+.btn.edit { background: #38bdf8; }
+.btn.delete { background: #ef4444; color: white; }
+.btn.save { background: #16a34a; color: white; }
+.btn.cancel { background: #94a3b8; }

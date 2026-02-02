@@ -1,0 +1,144 @@
+/* 🌙 Page */
+.pv-dark-container {
+  min-height: 100vh;
+  padding: 50px 20px;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: white;
+}
+
+/* Title */
+.pv-title {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 30px;
+  background: linear-gradient(to right, #38bdf8, #22c55e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Tabs */
+.pv-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 35px;
+}
+
+.pv-tabs button {
+  padding: 10px 26px;
+  border-radius: 30px;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.pv-tabs button.active {
+  background: linear-gradient(135deg, #ff4d6d, #ff758f);
+  box-shadow: 0 0 20px rgba(255, 77, 109, 0.6);
+}
+
+/* 🔴 Live tab pulse */
+.live-tab {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* Messages */
+.pv-message {
+  text-align: center;
+  color: #22c55e;
+  margin-bottom: 15px;
+}
+
+.pv-empty {
+  text-align: center;
+  opacity: 0.6;
+}
+
+/* Event card */
+.event-card {
+  margin-bottom: 50px;
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+}
+
+/* 🔥 LIVE EVENTS JUMP */
+.live-jump {
+  animation: jump 2s infinite;
+}
+
+@keyframes jump {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+/* Grid */
+.performance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+/* Performance card */
+.performance-card {
+  background: #020617;
+  padding: 16px;
+  border-radius: 14px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.performance-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 10px 25px rgba(56,189,248,0.4);
+}
+
+.performance-card video {
+  width: 100%;
+  border-radius: 10px;
+  background: white;
+}
+
+.performance-card h4 {
+  margin-top: 10px;
+}
+
+.school {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+/* Vote button */
+.vote-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #ff4d6d, #ff758f);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.vote-btn:hover {
+  box-shadow: 0 0 20px rgba(255,77,109,0.6);
+}
+
+/* Text */
+.login-msg,
+.closed {
+  text-align: center;
+  margin-top: 10px;
+  opacity: 0.7;
+}

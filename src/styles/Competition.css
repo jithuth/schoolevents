@@ -1,0 +1,202 @@
+/* ===============================
+   COMPETITIONS PAGE (DARK)
+================================ */
+
+/* ❌ Hide unwanted heading safely */
+.competitions-page h2 {
+  display: none;
+}
+
+/* ===============================
+   STATUS TABS (ONLY competitions)
+================================ */
+
+.status-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.status-btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: 1px solid #1e293b;
+  background: #020617;
+  color: #cbd5f5;
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.status-btn:hover {
+  background: #1e293b;
+}
+
+.status-btn.active {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+/* ===============================
+   EVENTS GRID
+================================ */
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ===============================
+   EVENT CARD
+================================ */
+
+
+.event-card {
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-6px);
+}
+
+/* IMAGE */
+.event-image {
+  position: relative;
+  height: 200px;
+}
+
+.event-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+}
+
+.badge.live {
+  background: #16a34a;
+}
+
+.badge.completed {
+  background: #6b7280;
+}
+
+.badge.upcoming {
+  background: #2563eb;
+}
+
+/* CONTENT */
+.event-content {
+  padding: 20px;
+}
+.competitions-wrapper {
+  padding: 20px;
+  position: relative; /* IMPORTANT */
+}
+
+.event-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.event-dates {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 10px;
+}
+
+.event-desc {
+  font-size: 15px;
+  color: #334155;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.meta {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 16px;
+}
+
+/* ACTIONS */
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+button.primary {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: #0ea5e9;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+button.danger {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+}
+
+button.disabled {
+  background: #e5e7eb;
+  color: #6b7280;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+}
+
+/* ===============================
+   EMPTY STATE
+================================ */
+
+.no-events {
+  color: #94a3b8;
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* ===============================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+  .events-grid {
+    gap: 18px;
+  }
+}
