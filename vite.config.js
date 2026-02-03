@@ -9,6 +9,6 @@ export default defineConfig({
   build: {
     // This ensures your build files go into a folder 
     // that Django can easily find
-    outDir: 'build',
+    outDir: 'dist',
   }
 })
