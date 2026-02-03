@@ -5,10 +5,10 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   // This is the critical fix for your 404 errors
-  base: '/schoolapi/', 
+  base: '/school/',
   build: {
     // This ensures your build files go into a folder 
     // that Django can easily find
-    outDir: 'dist',
+    outDir: 'build',
   }
 })

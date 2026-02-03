@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api/axios";
 import CompetitionCard from "./CompetitionCard";
 
 export default function CompetitionList() {
@@ -7,10 +7,8 @@ export default function CompetitionList() {
   const token = localStorage.getItem("access");
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/api/events/all/", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+    api
+      .get("events/all/")
       .then((res) => setEvents(res.data));
   }, []);
 

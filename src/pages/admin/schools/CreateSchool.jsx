@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../../../api/axios";
 import { useState } from "react";
 
 export default function CreateSchool() {
@@ -7,14 +7,9 @@ export default function CreateSchool() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await axios.post(
-      "http://127.0.0.1:8000/api/admin/schools/",
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access")}`,
-        },
-      }
+    await api.post(
+      "admin/schools/",
+      data
     );
 
     alert("School Created");

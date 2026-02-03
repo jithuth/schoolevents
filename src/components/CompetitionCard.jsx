@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../api/axios";
 import { useContext } from "react";
 import { AuthContext } from "../auth/AuthContext";
 import "../styles/Competition.css";
@@ -9,12 +9,9 @@ export default function CompetitionCard({ event }) {
 
   const registerEvent = async () => {
     try {
-      await axios.post(
-        "http://127.0.0.1:8000/api/events/register/",
-        { event: event.id },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+      await api.post(
+        "events/register/",
+        { event: event.id }
       );
       alert("Registered successfully ✅");
     } catch {
@@ -25,11 +22,8 @@ export default function CompetitionCard({ event }) {
   const deleteEvent = async () => {
     if (!window.confirm("Delete this event?")) return;
 
-    await axios.delete(
-      `http://127.0.0.1:8000/api/events/${event.id}/`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
+    await api.delete(
+      `events/${event.id}/`
     );
     window.location.reload();
   };

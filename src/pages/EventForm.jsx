@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../api/axios";
 import { useContext } from "react";
 import { AuthContext } from "../auth/AuthContext";
 
@@ -6,26 +6,16 @@ export default function EventCard({ event, refresh, onEdit }) {
   const { user } = useContext(AuthContext);
 
   const register = async () => {
-    await axios.post(
-      "http://127.0.0.1:8000/api/events/register/",
-      { event: event.id },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access")}`,
-        },
-      }
+    await api.post(
+      "events/register/",
+      { event: event.id }
     );
     alert("Registered successfully");
   };
 
   const remove = async () => {
-    await axios.delete(
-      `http://127.0.0.1:8000/api/events/${event.id}/`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access")}`,
-        },
-      }
+    await api.delete(
+      `events/${event.id}/`
     );
     refresh();
   };

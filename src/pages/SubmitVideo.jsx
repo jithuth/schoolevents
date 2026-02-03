@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api/axios";
 
 export default function SubmitVideo() {
   const [events, setEvents] = useState([]);
@@ -12,12 +12,8 @@ export default function SubmitVideo() {
 
   // 🔹 Fetch registered LIVE events
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/api/my-registered-live-events/", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access")}`,
-        },
-      })
+    api
+      .get("my-registered-live-events/")
       .then((res) => setEvents(res.data))
       .catch((err) =>
         console.error("Error fetching registered events", err)
@@ -43,12 +39,11 @@ export default function SubmitVideo() {
       formData.append("video", video);
       formData.append("duration_seconds", 0); // ✅ REQUIRED
 
-      await axios.post(
-        "http://127.0.0.1:8000/api/student/performances/",
+      await api.post(
+        "student/performances/",
         formData,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("access")}`,
             "Content-Type": "multipart/form-data",
           },
         }

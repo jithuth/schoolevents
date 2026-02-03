@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios"; // ✅ NORMAL AXIOS (IMPORTANT)
+import api from "../api/axios"; // ✅ Configured API
 import LiveCommentChat from "./LiveCommentChat";
 import "../styles/LiveAnnouncement.css";
 
@@ -10,8 +10,8 @@ export default function LiveAnnouncement() {
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const res = await axios.get(
-          "http://127.0.0.1:8000/api/events/current/winner/"
+        const res = await api.get(
+          "events/current/winner/"
         );
 
         if (res.data && res.data.performance_id) {
@@ -42,13 +42,13 @@ export default function LiveAnnouncement() {
         <div className="winner-card">
           <div className="winner-avatar">
             <img
-                src={
-                  winner.photo
-                    ? winner.photo
-                    : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                }
-                alt="winner"
-              />
+              src={
+                winner.photo
+                  ? winner.photo
+                  : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+              }
+              alt="winner"
+            />
 
             <div className="winner-ring"></div>
           </div>
@@ -69,11 +69,11 @@ export default function LiveAnnouncement() {
 
       {/* RIGHT → LIVE CHAT */}
       <div className="announcement-chat">
-  <LiveCommentChat
-    key={winner.performance_id}   // 🔥 THIS IS THE MAGIC
-    performanceId={winner.performance_id}
-  />
-</div>
+        <LiveCommentChat
+          key={winner.performance_id}   // 🔥 THIS IS THE MAGIC
+          performanceId={winner.performance_id}
+        />
+      </div>
 
     </div>
   );

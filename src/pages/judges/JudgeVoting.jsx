@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../../api/axios";
+import api, { MEDIA_BASE_URL } from "../../api/axios";
 import "../../styles/JudgeVoting.css";
 
 export default function JudgeVoting() {
@@ -59,7 +59,7 @@ export default function JudgeVoting() {
               <video
                 controls
                 preload="metadata"
-                src={`http://localhost:8000${p.video}`}
+                src={`${MEDIA_BASE_URL}${p.video}`}
               />
             </div>
 

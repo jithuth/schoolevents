@@ -1,7 +1,9 @@
 import axios from "axios";
 
+export const MEDIA_BASE_URL = "https://go4overseas.co.in/student_backend";
+
 const api = axios.create({
-  baseURL: "https://go4overseas.co.in/student_backend/api/",
+  baseURL: `${MEDIA_BASE_URL}/api/`,
 });
 
 api.interceptors.request.use(

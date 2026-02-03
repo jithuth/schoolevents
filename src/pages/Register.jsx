@@ -1,5 +1,5 @@
 // src/auth/Register.jsx
-import axios from "axios";
+import axios from "../api/axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Register.css";
@@ -33,7 +33,7 @@ export default function Register() {
 
     try {
       await axios.post(
-        "http://127.0.0.1:8000/api/auth/register/",
+        "auth/register/",
         formData
       );
 

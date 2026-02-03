@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../../api/axios";
 import { useState } from "react";
 
 export default function CreateUser() {
@@ -19,14 +19,9 @@ export default function CreateUser() {
     e.preventDefault();
 
     try {
-      await axios.post(
-        "http://127.0.0.1:8000/api/auth/create-user/",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access")}`,
-          },
-        }
+      await api.post(
+        "auth/create-user/",
+        formData
       );
 
       setMessage("✅ User created successfully");

@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../../api/axios";
 import { useEffect, useState } from "react";
 
 export default function Students() {
@@ -7,53 +7,33 @@ export default function Students() {
   const [editId, setEditId] = useState(null);
 
   const load = () => {
-    axios.get(
-      "http://127.0.0.1:8000/api/school-admin/students/",
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access")}`,
-        },
-      }
+    api.get(
+      "school-admin/students/"
     ).then(res => setStudents(res.data));
   };
 
   useEffect(load, []);
 
   const create = async () => {
-    await axios.post(
-      "http://127.0.0.1:8000/api/school-admin/students/",
-      form,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access")}`,
-        },
-      }
+    await api.post(
+      "school-admin/students/",
+      form
     );
     load();
   };
 
   const update = async (id) => {
-    await axios.put(
-      `http://127.0.0.1:8000/api/school-admin/students/${id}/`,
-      form,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access")}`,
-        },
-      }
+    await api.put(
+      `school-admin/students/${id}/`,
+      form
     );
     setEditId(null);
     load();
   };
 
   const remove = async (id) => {
-    await axios.delete(
-      `http://127.0.0.1:8000/api/school-admin/students/${id}/`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access")}`,
-        },
-      }
+    await api.delete(
+      `school-admin/students/${id}/`
     );
     load();
   };
@@ -63,11 +43,11 @@ export default function Students() {
       <h3>Students</h3>
 
       <input placeholder="Profile ID"
-        onChange={e => setForm({...form, profile:e.target.value})}/>
+        onChange={e => setForm({ ...form, profile: e.target.value })} />
       <input placeholder="Class"
-        onChange={e => setForm({...form, class_name:e.target.value})}/>
+        onChange={e => setForm({ ...form, class_name: e.target.value })} />
       <input placeholder="Section"
-        onChange={e => setForm({...form, section:e.target.value})}/>
+        onChange={e => setForm({ ...form, section: e.target.value })} />
       <button onClick={create}>Add Student</button>
 
       {students.map(s => (
@@ -79,7 +59,7 @@ export default function Students() {
           {editId === s.id && (
             <>
               <input placeholder="Class"
-                onChange={e => setForm({...form, class_name:e.target.value})}/>
+                onChange={e => setForm({ ...form, class_name: e.target.value })} />
               <button onClick={() => update(s.id)}>Save</button>
             </>
           )}

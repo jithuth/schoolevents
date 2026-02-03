@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import api from "../api/axios";
 import VotingCard from "../components/VotingCard";
 import { AuthContext } from "../auth/AuthContext";
 import "../styles/Voting.css";
@@ -14,8 +14,8 @@ export default function Voting() {
   // 🔹 Fetch events (PUBLIC) - only live events for voting
   const fetchEvents = async () => {
     try {
-      const res = await axios.get(
-        "http://127.0.0.1:8000/api/events/all/"
+      const res = await api.get(
+        "events/all/"
       );
       // Filter only live events
       const liveEvents = res.data.filter(e => e.status === "live");
@@ -39,14 +39,9 @@ export default function Voting() {
     }
 
     try {
-      await axios.post(
-        "http://127.0.0.1:8000/api/votes/",
-        { event: eventId },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access")}`,
-          },
-        }
+      await api.post(
+        "votes/",
+        { event: eventId }
       );
       alert("Vote cast successfully! 🗳️");
       fetchEvents();

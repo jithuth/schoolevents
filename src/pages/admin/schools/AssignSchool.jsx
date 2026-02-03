@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../../api/axios";
 
 const AssignSchool = () => {
   const [schools, setSchools] = useState([]);
@@ -8,25 +8,18 @@ const AssignSchool = () => {
   const [adminId, setAdminId] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const headers = {
-    Authorization: `Bearer ${localStorage.getItem("access")}`,
-    "Content-Type": "application/json",
-  };
-
   // 🔹 Fetch schools
   const fetchSchools = async () => {
-    const res = await axios.get(
-      "http://127.0.0.1:8000/api/admin/schools/",
-      { headers }
+    const res = await api.get(
+      "admin/schools/"
     );
     setSchools(res.data);
   };
 
   // 🔹 Fetch school admins (ALL admins + assigned flag)
   const fetchAdmins = async () => {
-    const res = await axios.get(
-      "http://127.0.0.1:8000/api/auth/admin/school-admins/",
-      { headers }
+    const res = await api.get(
+      "auth/admin/school-admins/"
     );
     setAdmins(res.data);
   };
@@ -48,13 +41,12 @@ const AssignSchool = () => {
     try {
       setLoading(true);
 
-      await axios.post(
-        "http://127.0.0.1:8000/api/admin/school-admins/",
+      await api.post(
+        "admin/school-admins/",
         {
           school: schoolId,
           user: adminId,
-        },
-        { headers }
+        }
       );
 
       alert("School Admin assigned successfully");
@@ -67,7 +59,7 @@ const AssignSchool = () => {
     } catch (err) {
       alert(
         err.response?.data?.detail ||
-          "Assignment failed"
+        "Assignment failed"
       );
     } finally {
       setLoading(false);

@@ -1,17 +1,13 @@
 // src/pages/schoolAdmin/PendingProfiles.jsx
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../api/axios";
 
 export default function PendingProfiles({ refresh, onDone }) {
   const [pending, setPending] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/api/school/pending-profiles/", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access")}`,
-        },
-      })
+    api
+      .get("school/pending-profiles/")
       .then((res) => setPending(res.data));
   }, [refresh]);
 

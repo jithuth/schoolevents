@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../../api/axios";
 
-const API_URL = "http://127.0.0.1:8000/api/admin/schools/";
+const API_URL = "admin/schools/";
 
 const emptyForm = {
   name: "",
@@ -22,16 +22,11 @@ const SchoolList = () => {
   const [editId, setEditId] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const headers = {
-    Authorization: `Bearer ${localStorage.getItem("access")}`,
-    "Content-Type": "application/json",
-  };
-
   // 🔹 FETCH
   const fetchSchools = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(API_URL, { headers });
+      const res = await api.get(API_URL);
       setSchools(res.data);
     } catch (err) {
       console.error(err.response?.data || err);
@@ -50,9 +45,9 @@ const SchoolList = () => {
 
     try {
       if (editId) {
-        await axios.put(`${API_URL}${editId}/`, formData, { headers });
+        await api.put(`${API_URL}${editId}/`, formData);
       } else {
-        await axios.post(API_URL, formData, { headers });
+        await api.post(API_URL, formData);
       }
 
       setFormData(emptyForm);
@@ -84,7 +79,7 @@ const SchoolList = () => {
   // 🔹 DELETE
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this school?")) return;
-    await axios.delete(`${API_URL}${id}/`, { headers });
+    await api.delete(`${API_URL}${id}/`);
     fetchSchools();
   };
 
@@ -120,9 +115,8 @@ const SchoolList = () => {
 
         <button
           type="submit"
-          className={`px-4 py-2 text-white ${
-            editId ? "bg-green-600" : "bg-blue-600"
-          }`}
+          className={`px-4 py-2 text-white ${editId ? "bg-green-600" : "bg-blue-600"
+            }`}
         >
           {editId ? "Update School" : "Add School"}
         </button>

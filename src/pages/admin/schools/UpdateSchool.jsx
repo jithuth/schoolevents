@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../../../api/axios";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -15,12 +15,8 @@ export default function EditSchool() {
 
   // Fetch single school
   useEffect(() => {
-    axios
-      .get(`http://127.0.0.1:8000/api/schools/${id}/`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access")}`,
-        },
-      })
+    api
+      .get(`schools/${id}/`)
       .then((res) => {
         setSchool(res.data);
         setLoading(false);
@@ -39,14 +35,9 @@ export default function EditSchool() {
     e.preventDefault();
 
     try {
-      await axios.put(
-        `http://127.0.0.1:8000/api/schools/${id}/`,
-        school,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access")}`,
-          },
-        }
+      await api.put(
+        `schools/${id}/`,
+        school
       );
 
       alert("✅ School updated successfully");
