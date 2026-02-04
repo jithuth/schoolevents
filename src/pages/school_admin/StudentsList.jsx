@@ -129,7 +129,7 @@ export default function StudentsList({ refresh }) {
           />
 
           <input
-            placeholder="Class (10)"
+            placeholder="Grade"
             value={createForm.grade}
             onChange={(e) =>
               setCreateForm({ ...createForm, grade: e.target.value })
@@ -137,7 +137,7 @@ export default function StudentsList({ refresh }) {
           />
 
           <input
-            placeholder="Section (A)"
+            placeholder="Class(ex:10 A)"
             value={createForm.section}
             onChange={(e) =>
               setCreateForm({ ...createForm, section: e.target.value })
@@ -152,6 +152,30 @@ export default function StudentsList({ refresh }) {
               setCreateForm({ ...createForm, roll_number: e.target.value })
             }
           />
+          <input
+          placeholder="Guardian Name"
+          value={createForm.guardian_name}
+          onChange={(e) =>
+            setCreateForm({ ...createForm, guardian_name: e.target.value })
+          }
+        />
+
+        <input
+          placeholder="Guardian Phone"
+          value={createForm.guardian_phone}
+          onChange={(e) =>
+            setCreateForm({ ...createForm, guardian_phone: e.target.value })
+          }
+        />
+
+        <input
+          type="date"
+          value={createForm.admission_date}
+          onChange={(e) =>
+            setCreateForm({ ...createForm, admission_date: e.target.value })
+          }
+        />
+
 
           <select
             value={createForm.assigned_teacher}
