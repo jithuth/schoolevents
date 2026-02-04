@@ -52,17 +52,17 @@ export default function TeacherVideoUpload() {
     e.preventDefault();
 
     if (!eventId || !studentId) {
-      alert("Event & Student select cheyyali");
+      alert("Select Event and Students ");
       return;
     }
 
     if (!duration || Number(duration) < 1) {
-      alert("Duration (seconds) enter cheyyali");
+      alert("Enter the Duration(seconds)");
       return;
     }
 
     if (!video || !photo) {
-      alert("Photo & Video select cheyyali");
+      alert("Please select Photos and Videos");
       return;
     }
 
