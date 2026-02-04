@@ -9,7 +9,7 @@ export default function LiveCommentChat({ performanceId }) {
 
   const { user } = useContext(AuthContext);
 
-  // 🚫 Blocked roles
+  // Blocked roles
   const blockedRoles = [
     "teacher",
     "judge",
@@ -18,14 +18,17 @@ export default function LiveCommentChat({ performanceId }) {
     "super_admin",
   ];
 
-  const canChat =
-    user && !blockedRoles.includes(user.profile?.role);
+  // ✅ SAFE ROLE DETECTION (FIX)
+  const role = user?.profile?.role || user?.role || null;
 
-  // 🔄 RESET CHAT WHEN WINNER CHANGES
+  const canChat = Boolean(
+    user && role && !blockedRoles.includes(role)
+  );
+
+  // 🔄 RESET CHAT WHEN PERFORMANCE CHANGES
   useEffect(() => {
     if (!performanceId) return;
 
-    // 🔥 CLEAR OLD CHAT
     setComments([]);
     setText("");
 
@@ -50,8 +53,13 @@ export default function LiveCommentChat({ performanceId }) {
   const sendComment = async (e) => {
     e.preventDefault();
 
+    if (!user) {
+      alert("🔒 Login to join live chat");
+      return;
+    }
+
     if (!canChat) {
-      alert("🚫 Only audience can participate in live chat");
+      alert(" Your role is not allowed to participate in live chat");
       return;
     }
 
@@ -63,48 +71,61 @@ export default function LiveCommentChat({ performanceId }) {
         text,
       });
       setText("");
-    } catch {
-      alert("Failed to send comment");
+    } catch (err) {
+      alert(" Failed to send comment");
     }
   };
 
   return (
     <div className="live-chat">
+      {/* HEADER */}
       <div className="live-header">
         <span className="live-dot"></span>
         <h3>🎤 Live Event Chat</h3>
         <span className="live-badge">LIVE 🔴</span>
       </div>
 
+      {/* MESSAGES */}
       <div className="chat-messages">
         {comments.length === 0 && (
           <p className="no-comments">
-            💭 Be the first to cheer!
+             Be the first to cheer!
           </p>
         )}
 
         {comments.map((c) => (
           <div key={c.id} className="chat-message">
-            <div className="chat-user">👤 {c.username}</div>
-            <div className="chat-text">{c.text} ✨</div>
+            <div className="chat-user">
+              👤 {c.username}
+            </div>
+            <div className="chat-text">
+              {c.text} 
+            </div>
           </div>
         ))}
       </div>
 
+      {/* INPUT */}
       <form onSubmit={sendComment} className="chat-input">
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder={
             !user
-              ? "🔒 Login to join live chat"
+              ? " Login to join live chat"
               : canChat
-              ? "💬 Cheer the performer..."
-              : "🚫 Chat disabled for your role"
+              ? " Cheer the performer..."
+              : "Chat disabled for your role"
           }
           disabled={!canChat}
         />
-        <button disabled={!canChat}>🚀 Send</button>
+
+        <button
+          type="submit"
+          disabled={!canChat}
+        >
+           Send
+        </button>
       </form>
     </div>
   );
