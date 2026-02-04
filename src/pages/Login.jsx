@@ -1,8 +1,8 @@
-import axios from "../api/axios"; // ✅ custom axios with interceptor
+import axios from "../api/axios";
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../auth/AuthContext";
-import "../styles/Login.css";
+import { Container, Card, Form, Button, Alert } from "react-bootstrap";
 
 export default function Login() {
   const { login } = useContext(AuthContext);
@@ -21,21 +21,15 @@ export default function Login() {
     setLoading(true);
 
     try {
-      // 🔐 LOGIN
       const res = await axios.post("/auth/login/", form);
 
-      // ✅ SAVE ACCESS TOKEN (MOST IMPORTANT LINE)
       localStorage.setItem("access", res.data.access);
-      console.log("TOKEN SAVED:", localStorage.getItem("access"));
 
-      // 🔐 FETCH PROFILE (token auto-attached by interceptor)
       const profileRes = await axios.get("/auth/me/");
       const profile = profileRes.data;
 
-      // 🔐 SAVE USER IN CONTEXT
       login(profile);
 
-      // 🔀 ROLE BASED REDIRECT
       if (profile.role === "school_admin") {
         navigate("/school-admin/dashboard");
       } else if (profile.role === "teacher") {
@@ -52,47 +46,56 @@ export default function Login() {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-card">
-        <h2>Welcome Back</h2>
-        <p className="subtitle">Login to participate in competitions</p>
-
-        {error && <p className="error">{error}</p>}
-
-        <form onSubmit={submit}>
-          <div className="input-group">
-            <input
-              placeholder="Username"
-              value={form.username}
-              onChange={(e) =>
-                setForm({ ...form, username: e.target.value })
-              }
-              required
-            />
+    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "80vh" }}>
+      <Card className="glass-card text-white p-4" style={{ width: "100%", maxWidth: "400px" }}>
+        <Card.Body>
+          <div className="text-center mb-4">
+            <h2 className="fw-bold mb-2">Welcome Back</h2>
+            <p className="text-secondary small">Login to participate in competitions</p>
           </div>
 
-          <div className="input-group">
-            <input
-              type="password"
-              placeholder="Password"
-              value={form.password}
-              onChange={(e) =>
-                setForm({ ...form, password: e.target.value })
-              }
-              required
-            />
+          {error && <Alert variant="danger" className="py-2 text-center">{error}</Alert>}
+
+          <Form onSubmit={submit}>
+            <Form.Group className="mb-3">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter username"
+                value={form.username}
+                onChange={(e) => setForm({ ...form, username: e.target.value })}
+                required
+                className="bg-dark text-white border-secondary"
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-4">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter password"
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                required
+                className="bg-dark text-white border-secondary"
+              />
+            </Form.Group>
+
+            <Button
+              type="submit"
+              className="w-100 fw-bold border-0"
+              disabled={loading}
+              style={{ background: "linear-gradient(to right, #6366f1, #ec4899)", padding: "12px" }}
+            >
+              {loading ? "Logging in..." : "Login"}
+            </Button>
+          </Form>
+
+          <div className="text-center mt-4 text-secondary small">
+            Don't have an account? <Link to="/register" className="text-white fw-bold">Sign Up</Link>
           </div>
-
-          <button type="submit" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
-
-        <div className="login-footer">
-          
-          
-        </div>
-      </div>
-    </div>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
