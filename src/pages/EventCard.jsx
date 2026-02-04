@@ -1,5 +1,6 @@
 // src/pages/EventCard.jsx
 import axios from "../api/axios";
+import { Card, Badge, Button, Row, Col } from "react-bootstrap";
 
 export default function EventCard({
   event,
@@ -12,72 +13,98 @@ export default function EventCard({
     user?.role === "student" && event.status === "upcoming";
 
   const remove = async () => {
-    await axios.delete(`/events/${event.id}/`);
-    onDeleted();
+    if (window.confirm("Are you sure you want to delete this event?")) {
+      try {
+        await axios.delete(`/events/${event.id}/`);
+        if (onDeleted) onDeleted();
+        else window.location.reload();
+      } catch (err) {
+        alert("Failed to delete event");
+      }
+    }
+  };
+
+  const statusVariant = {
+    upcoming: "primary",
+    live: "danger",
+    completed: "secondary"
   };
 
   return (
-    <div className="event-card">
-      <div className="event-image">
-        <img
-          src={
-            event.image ||
-            "https://images.unsplash.com/photo-1511379938547-c1f69419868d"
-          }
-          alt={event.title}
+    <Card className="h-100 border-0 shadow-sm glass-card text-white overflow-hidden">
+      <div className="position-relative" style={{ height: "200px" }}>
+        <Card.Img
+          variant="top"
+          src={event.image || "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&q=80"}
+          style={{ height: "100%", objectFit: "cover" }}
         />
-        <span className={`badge ${event.status}`}>
-          {event.status.toUpperCase()}
-        </span>
+        <div className="position-absolute top-0 end-0 m-3">
+          <Badge bg={statusVariant[event.status]} className="px-3 py-2 rounded-pill shadow-sm">
+            {event.status.toUpperCase()}
+          </Badge>
+        </div>
+        <div className="position-absolute bottom-0 start-0 w-100 p-3" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.8), transparent)" }}>
+          <small className="text-light fw-bold"><i className="bi bi-tag-fill me-1"></i> {event.category}</small>
+        </div>
       </div>
 
-      <div className="event-content">
-        <h3 className="event-title">{event.title}</h3>
+      <Card.Body className="d-flex flex-column">
+        <Card.Title className="fw-bold mb-3">{event.title}</Card.Title>
 
-        <p className="event-dates">
-          📅 <b>Start:</b>{" "}
-          {new Date(event.start_time).toLocaleString()} &nbsp; | &nbsp;
-          ⏳ <b>End:</b>{" "}
-          {new Date(event.end_time).toLocaleString()}
-        </p>
+        <div className="mb-3 text-secondary small">
+          <div className="d-flex align-items-center mb-1">
+            <i className="bi bi-calendar-event me-2 text-primary"></i>
+            <span>Start: {new Date(event.start_time).toLocaleDateString()}</span>
+          </div>
+          <div className="d-flex align-items-center">
+            <i className="bi bi-people me-2 text-info"></i>
+            <span>Max Participants: {event.max_participants}</span>
+          </div>
+        </div>
 
-        <p className="event-desc">{event.description}</p>
+        <Card.Text className="text-secondary small mb-4 flex-grow-1" style={{ whiteSpace: "pre-wrap" }}>
+          {event.description?.length > 100 ? event.description.substring(0, 100) + "..." : event.description}
+        </Card.Text>
 
-        <p className="meta">
-          <b>Type:</b> {event.event_type} &nbsp; | &nbsp;
-          <b>Category:</b> {event.category}
-        </p>
-
-        <div className="actions">
+        <div className="mt-auto">
           {canShowInterestButton && (
-            <>
-              {event.is_interested ? (
-                <button className="disabled" disabled>
-                  Interested ✓
-                </button>
-              ) : (
-                <button
-                  className="primary"
-                  onClick={() => onInterest(event.id)}
-                >
-                  I'm Interested
-                </button>
-              )}
-            </>
+            event.is_interested ? (
+              <Button variant="success" className="w-100 rounded-pill" disabled>
+                <i className="bi bi-check-circle-fill me-2"></i> Registered
+              </Button>
+            ) : (
+              <Button
+                onClick={() => onInterest(event.id)}
+                className="w-100 rounded-pill text-white fw-bold"
+                style={{ background: "linear-gradient(to right, #6366f1, #ec4899)", border: "none" }}
+              >
+                Register Now
+              </Button>
+            )
           )}
 
           {user?.role === "school_admin" && (
-            <>
-              <button className="secondary" onClick={() => onEdit(event)}>
-                Edit
-              </button>
-              <button className="danger" onClick={remove}>
-                Delete
-              </button>
-            </>
+            <Row className="g-2">
+              <Col>
+                <Button variant="outline-light" className="w-100 rounded-pill" onClick={() => onEdit(event)}>
+                  Edit
+                </Button>
+              </Col>
+              <Col>
+                <Button variant="outline-danger" className="w-100 rounded-pill" onClick={remove}>
+                  Delete
+                </Button>
+              </Col>
+            </Row>
+          )}
+
+          {!user && (
+            <Button variant="secondary" className="w-100 rounded-pill" disabled style={{ opacity: 0.6 }}>
+              Login to Register
+            </Button>
           )}
         </div>
-      </div>
-    </div>
+      </Card.Body>
+    </Card>
   );
 }

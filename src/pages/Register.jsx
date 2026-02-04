@@ -1,8 +1,8 @@
 // src/auth/Register.jsx
 import axios from "../api/axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../styles/Register.css";
+import { useNavigate, Link } from "react-router-dom";
+import { Container, Card, Form, Button, Alert } from "react-bootstrap";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -47,67 +47,81 @@ export default function Register() {
   };
 
   return (
-    <div className="register-page">
-      <div className="register-card">
-        <h2>Create Account 🎶</h2>
-        <p className="subtitle">
-          Join School and showcase your talent
-        </p>
-
-        {error && <p className="error">{error}</p>}
-        {success && <p className="success">{success}</p>}
-
-        <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              onChange={handleChange}
-              required
-            />
+    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "90vh" }}>
+      <Card className="glass-card text-white p-4" style={{ width: "100%", maxWidth: "500px" }}>
+        <Card.Body>
+          <div className="text-center mb-4">
+            <h2 className="fw-bold mb-2">Create Account 🎶</h2>
+            <p className="text-secondary small">Join School and showcase your talent</p>
           </div>
 
-          <div className="input-group">
-            <input
-              type="text"
-              name="full_name"
-              placeholder="Full Name"
-              onChange={handleChange}
-              required
-            />
+          {error && <Alert variant="danger" className="py-2 text-center">{error}</Alert>}
+          {success && <Alert variant="success" className="py-2 text-center">{success}</Alert>}
+
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                name="username"
+                placeholder="Choose a username"
+                onChange={handleChange}
+                required
+                className="bg-dark text-white border-secondary"
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Full Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="full_name"
+                placeholder="Your full name"
+                onChange={handleChange}
+                required
+                className="bg-dark text-white border-secondary"
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control
+                type="text"
+                name="phone"
+                placeholder="Phone number"
+                onChange={handleChange}
+                required
+                className="bg-dark text-white border-secondary"
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-4">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                placeholder="Create a password"
+                onChange={handleChange}
+                required
+                className="bg-dark text-white border-secondary"
+              />
+            </Form.Group>
+
+            <Button
+              type="submit"
+              className="w-100 fw-bold border-0"
+              disabled={loading}
+              style={{ background: "linear-gradient(to right, #6366f1, #ec4899)", padding: "12px" }}
+            >
+              {loading ? "Creating Account..." : "Sign Up"}
+            </Button>
+          </Form>
+
+          <div className="text-center mt-4 text-secondary small">
+            Already have an account? <Link to="/login" className="text-white fw-bold">Login</Link>
           </div>
-
-          <div className="input-group">
-            <input
-              type="text"
-              name="phone"
-              placeholder="Phone Number"
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="input-group">
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <button type="submit" disabled={loading}>
-            {loading ? "Creating Account..." : "Sign Up"}
-          </button>
-        </form>
-
-        <div className="register-footer">
-          Already have an account?
-          <a href="/login"> Login</a>
-        </div>
-      </div>
-    </div>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }

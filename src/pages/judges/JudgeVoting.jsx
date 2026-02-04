@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api, { MEDIA_BASE_URL } from "../../api/axios";
-import "../../styles/JudgeVoting.css";
+import { Container, Row, Col, Card, Form, Button, Alert } from "react-bootstrap";
 
 export default function JudgeVoting() {
   const [performances, setPerformances] = useState([]);
@@ -46,70 +46,102 @@ export default function JudgeVoting() {
   };
 
   return (
-    <div className="judge-page">
-      <h2 className="judge-title">⚖️ Judge Voting</h2>
+    <Container className="py-5" style={{ minHeight: "80vh" }}>
+      <div className="text-center mb-5">
+        <h2 className="display-4 fw-bold mb-2">⚖️ Judge Voting</h2>
+        <p className="text-secondary">Evaluate student performances fairly</p>
+      </div>
 
-      {message && <p className="error">{message}</p>}
+      {message && <Alert variant="danger" className="text-center">{message}</Alert>}
 
-      <div className="judge-grid">
+      <div className="d-flex flex-column gap-5">
         {performances.map((p) => (
-          <div className="judge-card" key={p.id}>
-            {/* LEFT : VIDEO */}
-            <div className="judge-video">
-              <video
-                controls
-                preload="metadata"
-                src={`${MEDIA_BASE_URL}${p.video}`}
-              />
-            </div>
-
-            {/* RIGHT : DETAILS + SCORE */}
-            <div className="judge-info">
-              <h3>{p.title}</h3>
-              <p><b>Student:</b> {p.student}</p>
-              <p><b>Event:</b> {p.event_title}</p>
-
-              <div className="score-inputs">
-                <input
-                  type="number"
-                  placeholder="Creativity"
-                  min="0"
-                  max="10"
-                  onChange={(e) => handleChange(p.id, "creativity", e.target.value)}
+          <Card key={p.id} className="glass-card shadow-lg border-0 overflow-hidden">
+            <Row className="g-0">
+              {/* LEFT : VIDEO */}
+              <Col lg={7} className="bg-black d-flex align-items-center justify-content-center">
+                <video
+                  controls
+                  preload="metadata"
+                  src={`${MEDIA_BASE_URL}${p.video}`}
+                  className="w-100"
+                  style={{ maxHeight: "500px" }}
                 />
-                <input
-                  type="number"
-                  placeholder="Technique"
-                  min="0"
-                  max="10"
-                  onChange={(e) => handleChange(p.id, "technique", e.target.value)}
-                />
-                <input
-                  type="number"
-                  placeholder="Presentation"
-                  min="0"
-                  max="10"
-                  onChange={(e) =>
-                    handleChange(p.id, "presentation", e.target.value)
-                  }
-                />
-              </div>
+              </Col>
 
-              <textarea
-                placeholder="Feedback (optional)"
-                onChange={(e) => handleChange(p.id, "feedback", e.target.value)}
-              />
+              {/* RIGHT : DETAILS + SCORE */}
+              <Col lg={5}>
+                <Card.Body className="p-4 d-flex flex-column h-100">
+                  <div className="mb-4">
+                    <h3 className="fw-bold text-white mb-2">{p.title}</h3>
+                    <div className="d-flex flex-column gap-1 text-secondary">
+                      <span><i className="bi bi-person-fill me-2"></i> <b>Student:</b> {p.student}</span>
+                      <span><i className="bi bi-tag-fill me-2"></i> <b>Event:</b> {p.event_title}</span>
+                    </div>
+                  </div>
 
-              <button
-                className="submit-btn"
-                onClick={() => submitScore(p.id)}
-              >
-                Submit Score
-              </button>
-            </div>
-          </div>
+                  <Form className="flex-grow-1">
+                    <Row className="g-3 mb-3">
+                      <Col xs={4}>
+                        <Form.Label className="text-white small">Creativity (10)</Form.Label>
+                        <Form.Control
+                          type="number"
+                          placeholder="0-10"
+                          min="0"
+                          max="10"
+                          className="bg-dark text-white border-secondary"
+                          onChange={(e) => handleChange(p.id, "creativity", e.target.value)}
+                        />
+                      </Col>
+                      <Col xs={4}>
+                        <Form.Label className="text-white small">Technique (10)</Form.Label>
+                        <Form.Control
+                          type="number"
+                          placeholder="0-10"
+                          min="0"
+                          max="10"
+                          className="bg-dark text-white border-secondary"
+                          onChange={(e) => handleChange(p.id, "technique", e.target.value)}
+                        />
+                      </Col>
+                      <Col xs={4}>
+                        <Form.Label className="text-white small">Presenttn (10)</Form.Label>
+                        <Form.Control
+                          type="number"
+                          placeholder="0-10"
+                          min="0"
+                          max="10"
+                          className="bg-dark text-white border-secondary"
+                          onChange={(e) => handleChange(p.id, "presentation", e.target.value)}
+                        />
+                      </Col>
+                    </Row>
+
+                    <Form.Group className="mb-4">
+                      <Form.Label className="text-white small">Feedback</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={3}
+                        placeholder="Optional feedback..."
+                        className="bg-dark text-white border-secondary"
+                        onChange={(e) => handleChange(p.id, "feedback", e.target.value)}
+                      />
+                    </Form.Group>
+
+                    <Button
+                      className="w-100 fw-bold border-0"
+                      onClick={() => submitScore(p.id)}
+                      style={{ background: "linear-gradient(to right, #6366f1, #ec4899)", padding: "10px" }}
+                    >
+                      Submit Score
+                    </Button>
+                  </Form>
+                </Card.Body>
+              </Col>
+            </Row>
+          </Card>
         ))}
       </div>
-    </div>
+    </Container>
   );
 }
