@@ -11,13 +11,14 @@ export default function TeacherVideoUpload() {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [duration, setDuration] = useState("");
   const [video, setVideo] = useState(null);
   const [photo, setPhoto] = useState(null);
 
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  // Load live events
+  /* ================= LOAD EVENTS ================= */
   useEffect(() => {
     axios
       .get("/events/live/")
@@ -25,7 +26,7 @@ export default function TeacherVideoUpload() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Load students for event
+  /* ================= LOAD STUDENTS ================= */
   useEffect(() => {
     if (!eventId) {
       setStudents([]);
@@ -46,11 +47,22 @@ export default function TeacherVideoUpload() {
     setSelectedStudent(students.find((s) => s.id === id) || null);
   };
 
+  /* ================= SUBMIT ================= */
   const submit = async (e) => {
     e.preventDefault();
 
+    if (!eventId || !studentId) {
+      alert("Event & Student select cheyyali");
+      return;
+    }
+
+    if (!duration || Number(duration) < 1) {
+      alert("Duration (seconds) enter cheyyali");
+      return;
+    }
+
     if (!video || !photo) {
-      alert("Select both video and photo");
+      alert("Photo & Video select cheyyali");
       return;
     }
 
@@ -58,25 +70,29 @@ export default function TeacherVideoUpload() {
       setSubmitting(true);
 
       const formData = new FormData();
-      formData.append("event", eventId);
-      formData.append("student", studentId);
+      formData.append("event", String(eventId));
+      formData.append("student", String(studentId));
       formData.append("title", title);
       formData.append("description", description);
-      formData.append("video", video);
+      formData.append("duration_seconds", duration);
       formData.append("photo", photo);
-      formData.append("duration_seconds", 0);
+      formData.append("video", video);
 
       await axios.post("/teacher/performances/", formData);
 
       alert("Upload successful ✅ Waiting for approval");
 
+      // reset
       setEventId("");
       setStudentId("");
       setSelectedStudent(null);
       setTitle("");
       setDescription("");
+      setDuration("");
       setVideo(null);
       setPhoto(null);
+    } catch (err) {
+      alert(JSON.stringify(err.response?.data, null, 2));
     } finally {
       setSubmitting(false);
     }
@@ -158,6 +174,20 @@ export default function TeacherVideoUpload() {
             />
           </div>
 
+          {/* Duration */}
+          <div style={styles.field}>
+            <label style={styles.label}>Duration (seconds)</label>
+            <input
+              type="number"
+              min="1"
+              placeholder="e.g. 60"
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+              style={styles.input}
+              required
+            />
+          </div>
+
           {/* Photo */}
           <div style={styles.field}>
             <label style={styles.label}>Photo</label>
@@ -197,7 +227,7 @@ export default function TeacherVideoUpload() {
   );
 }
 
-/* 🎨 DARK THEME STYLES */
+/* ================= STYLES ================= */
 const styles = {
   page: {
     minHeight: "80vh",
@@ -227,9 +257,7 @@ const styles = {
     marginBottom: 25,
     fontSize: 14,
   },
-  field: {
-    marginBottom: 16,
-  },
+  field: { marginBottom: 16 },
   label: {
     color: "#cbd5f5",
     fontSize: 14,
@@ -261,10 +289,7 @@ const styles = {
     color: "#e5e7eb",
     border: "1px solid #334155",
   },
-  file: {
-    width: "100%",
-    color: "#e5e7eb",
-  },
+  file: { width: "100%", color: "#e5e7eb" },
   highlight: {
     background: "#020617",
     border: "1px solid #1e293b",
